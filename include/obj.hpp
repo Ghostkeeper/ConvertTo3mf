@@ -47,6 +47,13 @@ protected:
 	 * trims whitespace from these lines.
 	 */
 	std::vector<std::string> preprocess(const std::string filename) const;
+
+	/*!
+	 * Reads all the vertex definitions from a preprocessed OBJ file.
+	 *
+	 * This puts the vertices in the Obj class.
+	 */
+	void load_vertices(const std::vector<std::string>& lines);
 };
 
 }

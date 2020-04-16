@@ -19,6 +19,7 @@ Model Obj::import(const std::string filename) {
 
 	std::vector<std::string> lines = obj.preprocess(filename);
 	obj.load_vertices(lines);
+	obj.load_faces(lines);
 
 	return Model();
 }
@@ -99,6 +100,45 @@ void Obj::load_vertices(const std::vector<std::string>& lines) {
 
 		//Successfully parsed a vertex! Let's store it now that everything is safe.
 		vertices.emplace_back(x, y, z);
+	}
+}
+
+void Obj::load_faces(const std::vector<std::string>& lines) {
+	for(const std::string& line : lines) {
+		if(line.find("f ") != 0) { //Not a face on this line.
+			continue;
+		}
+
+		std::vector<size_t> vertex_indices; //Resulting indices from this line.
+		vertex_indices.reserve(3);
+		size_t pos = 1; //Start searching for vertices from here.
+		while(pos != std::string::npos) { //For each vertex.
+			pos = line.find_first_not_of(' ', pos);
+			if(pos == std::string::npos) { //There's just space now, no new vertex.
+				break;
+			}
+			const size_t corner_start = pos;
+			pos = line.find(' ', corner_start);
+			const size_t corner_end = (pos == std::string::npos) ? line.length() : pos; //If there is no more space, stop at the end of the string.
+			const std::string corner = line.substr(corner_start, corner_end - corner_start);
+
+			//For now we're only interested in the index to the vertex, not in normals or texture coordinates.
+			size_t vertex_end = corner.find('/');
+			if(vertex_end == std::string::npos) {
+				vertex_end = corner.length();
+			}
+			const std::string vertex_index_str = corner.substr(0, vertex_end);
+
+			//Convert to index.
+			char* end;
+			const size_t vertex_index = strtol(vertex_index_str.c_str(), &end, 10);
+			if(*end) { //Not an integer.
+				continue;
+			}
+			vertex_indices.push_back(vertex_index);
+		}
+
+		faces.push_back(vertex_indices);
 	}
 }
 

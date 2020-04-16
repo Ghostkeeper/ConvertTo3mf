@@ -54,6 +54,13 @@ protected:
 	 * This puts the vertices in the Obj class.
 	 */
 	void load_vertices(const std::vector<std::string>& lines);
+
+	/*!
+	 * Reads all the face definitions from a preprocessed OBJ file.
+	 *
+	 * This puts the faces in the Obj class.
+	 */
+	void load_faces(const std::vector<std::string>& lines);
 };
 
 }

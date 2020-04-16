@@ -9,9 +9,13 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
+namespace convertobjto3mf {
+
 /*!
  * Show how to use this application, including all parameters, in the stdcout.
  */
 void show_help();
+
+}
 
 #endif //MAIN_HPP

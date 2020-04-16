@@ -134,7 +134,10 @@ void Obj::load_faces(const std::vector<std::string>& lines) {
 			if(*end) { //Not an integer.
 				continue;
 			}
-			vertex_indices.push_back(vertex_index);
+			if(vertex_index == 0) { //Vertices are 1-indexed. 0 should not occur.
+				continue;
+			}
+			vertex_indices.push_back(vertex_index - 1);
 		}
 
 		faces.push_back(vertex_indices);

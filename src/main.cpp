@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 	//Parse the rest as optional parameters.
 	for(size_t i = 2; i < argc; ++i) {
 		std::string argument(argv[i]);
-		if(argument.rfind("--output=") == 0) {
+		if(argument.find("--output=") == 0) {
 			output_filename = argument.substr(9);
 		}
 	}

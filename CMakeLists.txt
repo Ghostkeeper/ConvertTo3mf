@@ -5,6 +5,7 @@
 #You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
 
 cmake_minimum_required(VERSION 3.13) #Oldest version it was tested with.
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake") #Finding dependencies.
 
 #Release configuration.
 set(CONVERTOBJTO3MF_VERSION_MAJOR 0 CACHE STRING "Major release version. This must be incremented if there are changes that are not backwards compatible.")
@@ -13,6 +14,10 @@ set(CONVERTOBJTO3MF_VERSION_PATCH 1 CACHE STRING "Patch release version. This mu
 
 project(convertobjto3mf VERSION ${CONVERTOBJTO3MF_VERSION_MAJOR}.${CONVERTOBJTO3MF_VERSION_MINOR}.${CONVERTOBJTO3MF_VERSION_PATCH} DESCRIPTION "Command line application to convert models to 3MF.")
 
+#Dependencies.
+find_package(libzip REQUIRED)
+
+#Sources.
 set(convertobjto3mf_sources
 	"main.cpp"
 	"job.cpp"
@@ -27,5 +32,6 @@ endforeach()
 
 #The main target.
 add_executable(convertobjto3mf ${convertobjto3mf_source_paths})
-
+target_link_libraries(convertobjto3mf "${LIBZIP_LIBRARY}")
 target_include_directories(convertobjto3mf PUBLIC "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(convertobjto3mf PRIVATE "${LIBZIP_INCLUDE_DIR}")

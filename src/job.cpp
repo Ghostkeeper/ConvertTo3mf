@@ -10,7 +10,8 @@
 
 #include "job.hpp" //The definitions for this file.
 #include "model.hpp" //To store models as intermediary representation.
-#include "obj.hpp" //To import OBJ files.
+#include "obj.hpp"
+#include "threemf.hpp" //To import OBJ files.
 
 namespace convertobjto3mf {
 
@@ -21,8 +22,8 @@ Job::Job(const std::string& input_filename, const std::string& output_filename) 
 void Job::run() {
 	std::cout << "Converting " << input_filename << " to " << output_filename << std::endl;
 
-	//Import the OBJ file.
 	Model model = Obj::import(input_filename);
+	ThreeMF::export_to_file(output_filename, model);
 }
 
 }

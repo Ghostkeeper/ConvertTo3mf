@@ -10,6 +10,7 @@
 #define THREEMF_HPP
 
 #include <string> //To accept a file name.
+#include <array> //To store triangles.
 
 #include "model.hpp" //To convert from 3D models.
 
@@ -29,6 +30,30 @@ public:
 	 * \param model The model to write to this file.
 	 */
 	static void export_to_file(const std::string filename, const Model& model);
+
+protected:
+	/*!
+	 * For each mesh, a list of vertices.
+	 *
+	 * The vertices within one mesh are supposed to be unique. To save file
+	 * size, the same vertex should not appear in this list twice, but rather be
+	 * referenced by the same index from the face.
+	 */
+	std::vector<std::vector<Point3>> vertices;
+
+	/*!
+	 * For each mesh, a list of triangles.
+	 *
+	 * The triangles refer to indices within the corresponding list of vertices.
+	 *
+	 * 3MF doesn't support faces with more than 3 vertices.
+	 */
+	std::vector<std::vector<std::array<size_t, 3>>> triangles;
+
+	/*!
+	 * Fill the 3MF file from the common model data structure.
+	 */
+	void fill_from_model(const Model& model);
 };
 
 }

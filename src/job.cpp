@@ -12,6 +12,8 @@
 
 Job::Job(const std::string& input_filename, const std::string& output_filename) :
 		input_filename(input_filename),
-		output_filename(output_filename) {
+		output_filename(output_filename) {};
+
+void Job::run() {
 	std::cout << "Converting " << input_filename << " to " << output_filename << std::endl;
-};
+}

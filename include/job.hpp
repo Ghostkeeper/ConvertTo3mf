@@ -24,7 +24,15 @@ class Job {
 		 */
 		std::string output_filename;
 
+		/*!
+		 * Construct a new conversion job.
+		 */
 		Job(const std::string& input_filename, const std::string& output_filename);
+
+		/*!
+		 * Starts the conversion process.
+		 */
+		void run();
 };
 
 #endif //JOB_HPP

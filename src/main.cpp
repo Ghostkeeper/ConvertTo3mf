@@ -44,6 +44,7 @@ int main(int argc, char** argv) {
 	}
 
 	Job job(input_filename, output_filename);
+	job.run();
 
 	return 0;
 }

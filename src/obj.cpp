@@ -6,6 +6,7 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
+#include <fstream> //To read OBJ files.
 #include <string> //To process the content of OBJ files.
 
 #include "obj.hpp" //Definitions for this class.
@@ -15,6 +16,28 @@ namespace convertobjto3mf {
 
 Model Obj::import(const std::string filename) {
 	Obj obj; //Store the OBJ file in its own representation.
+
+	//Read the file and pre-process the lines.
+	std::ifstream file_handle(filename);
+	std::vector<std::string> lines; //Lines after combining lines with line continuations.
+	lines.reserve(32000); //Most files are going to contain at least this amount of lines. Prevent copying too often when growing.
+	for(std::string line; std::getline(file_handle, line);) {
+		//Trim whitespace from the line.
+		size_t first = line.find_first_not_of(" \t\n\r\f");
+		if(first == std::string::npos) {
+			line = "";
+		}
+		size_t last = line.find_last_not_of(" \t\n\r\f");
+		line = line.substr(first, (last - first + 1));
+
+		//Process line continuation.
+		if(!lines.empty() && lines.back()[lines.back().length() - 1] == '\\') { //Previous line had a line continuation.
+			lines[lines.size() - 1][lines.back().length() - 1] = ' '; //Turn the backslash into a space.
+			lines[lines.size() - 1] += line; //Add the new line.
+		} else {
+			lines.push_back(line);
+		}
+	}
 
 	return Model();
 }

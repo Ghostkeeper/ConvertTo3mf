@@ -22,6 +22,10 @@ class Face {
 	public:
 	/*!
 	 * All of the vertices within this face.
+	 *
+	 * These vertices are stored as a triangle fan. When converting to
+	 * triangles, you'd need to repeat the first and last vertex for each
+	 * triangle and add the new vertex to the triangle as third vertex.
 	 */
 	std::vector<Point3> vertices;
 };

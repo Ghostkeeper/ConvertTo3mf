@@ -6,23 +6,23 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
-#include <iostream> //To communicate progress via stdcout.
-
-#include "job.hpp" //The definitions for this file.
-#include "model.hpp" //To store models as intermediary representation.
-#include "obj.hpp" //To import OBJ files.
+#ifndef OBJ_HPP
+#define OBJ_HPP
 
 namespace convertobjto3mf {
 
-Job::Job(const std::string& input_filename, const std::string& output_filename) :
-		input_filename(input_filename),
-		output_filename(output_filename) {};
+class Model;
 
-void Job::run() {
-	std::cout << "Converting " << input_filename << " to " << output_filename << std::endl;
+/*!
+ * Collection of functions for handling Wavefront OBJ files.
+ */
+class Obj {
+public:
+	/*!
+	 * Read an OBJ file, storing it in memory as a `Model` instance.
+	 */
+	static Model import(const std::string filename);
+};
 
-	//Import the OBJ file.
-	Model model = Obj::import(input_filename);
 }
-
-}
+#endif //OBJ_HPP

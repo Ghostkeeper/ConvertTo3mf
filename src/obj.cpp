@@ -6,23 +6,16 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
-#include <iostream> //To communicate progress via stdcout.
+#include <string> //To process the content of OBJ files.
 
-#include "job.hpp" //The definitions for this file.
-#include "model.hpp" //To store models as intermediary representation.
-#include "obj.hpp" //To import OBJ files.
+#include "obj.hpp" //Definitions for this class.
+#include "model.hpp" //To write models.
 
 namespace convertobjto3mf {
 
-Job::Job(const std::string& input_filename, const std::string& output_filename) :
-		input_filename(input_filename),
-		output_filename(output_filename) {};
-
-void Job::run() {
-	std::cout << "Converting " << input_filename << " to " << output_filename << std::endl;
-
-	//Import the OBJ file.
-	Model model = Obj::import(input_filename);
+Model Obj::import(const std::string filename) {
+	//TODO.
+	return Model();
 }
 
 }

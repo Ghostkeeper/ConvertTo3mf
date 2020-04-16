@@ -16,6 +16,7 @@ project(convertobjto3mf VERSION ${CONVERTOBJTO3MF_VERSION_MAJOR}.${CONVERTOBJTO3
 set(convertobjto3mf_sources
 	"main.cpp"
 	"job.cpp"
+	"obj.cpp"
 	"point3.cpp"
 )
 set(convertobjto3mf_source_paths "")

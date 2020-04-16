@@ -17,9 +17,14 @@ namespace convertobjto3mf {
 Model Obj::import(const std::string filename) {
 	Obj obj; //Store the OBJ file in its own representation.
 
-	//Read the file and pre-process the lines.
+	std::vector<std::string> lines = obj.preprocess(filename);
+
+	return Model();
+}
+
+std::vector<std::string> Obj::preprocess(const std::string filename) const {
 	std::ifstream file_handle(filename);
-	std::vector<std::string> lines; //Lines after combining lines with line continuations.
+	std::vector<std::string> lines; //Result of the pre-processing step.
 	lines.reserve(32000); //Most files are going to contain at least this amount of lines. Prevent copying too often when growing.
 	for(std::string line; std::getline(file_handle, line);) {
 		//Trim whitespace from the line.
@@ -38,8 +43,7 @@ Model Obj::import(const std::string filename) {
 			lines.push_back(line);
 		}
 	}
-
-	return Model();
+	return lines;
 }
 
 }

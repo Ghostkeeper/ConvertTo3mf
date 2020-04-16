@@ -39,6 +39,14 @@ protected:
 	 * Each face is a list of indices referring to one of the vertices each.
 	 */
 	std::vector<std::vector<size_t>> faces;
+
+	/*!
+	 * Reads lines from an OBJ file and pre-processes them.
+	 *
+	 * This combines lines that have a continuation slash between them, and
+	 * trims whitespace from these lines.
+	 */
+	std::vector<std::string> preprocess(const std::string filename) const;
 };
 
 }

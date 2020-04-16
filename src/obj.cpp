@@ -14,7 +14,8 @@
 namespace convertobjto3mf {
 
 Model Obj::import(const std::string filename) {
-	//TODO.
+	Obj obj; //Store the OBJ file in its own representation.
+
 	return Model();
 }
 

@@ -9,6 +9,10 @@
 #ifndef OBJ_HPP
 #define OBJ_HPP
 
+#include <vector> //To store the data structure contained within the OBJ file format.
+
+#include "point3.hpp" //To store vertices from the OBJ file.
+
 namespace convertobjto3mf {
 
 class Model;
@@ -22,6 +26,19 @@ public:
 	 * Read an OBJ file, storing it in memory as a `Model` instance.
 	 */
 	static Model import(const std::string filename);
+
+protected:
+	/*!
+	 * The list of vertices found in the OBJ file.
+	 */
+	std::vector<Point3> vertices;
+
+	/*!
+	 * The list of faces found in the OBJ file.
+	 *
+	 * Each face is a list of indices referring to one of the vertices each.
+	 */
+	std::vector<std::vector<size_t>> faces;
 };
 
 }

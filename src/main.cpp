@@ -6,9 +6,10 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
-#include <iostream>
+#include <iostream> //To show the help contents in the stdcout.
 
-#include "main.hpp"
+#include "job.hpp" //To start conversion jobs.
+#include "main.hpp" //Definitions for this file.
 
 /*!
  * Entry point into the program.
@@ -41,6 +42,8 @@ int main(int argc, char** argv) {
 			output_filename = argument.substr(9);
 		}
 	}
+
+	Job job(input_filename, output_filename);
 
 	return 0;
 }

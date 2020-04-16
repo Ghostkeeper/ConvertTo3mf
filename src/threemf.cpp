@@ -67,10 +67,10 @@ void ThreeMF::write(const std::string& filename) const {
 
 	//Writing [Content_Types].xml.
 	std::string content_types_data(u8"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-		"<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
-			"<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\" />"
-			"<Default Extension=\"model\" ContentType=\"application/vnd.ms-package.3dmanufacturing-3dmodel+xml\" />"
-		"</Types>");
+		u8"<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
+			u8"<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\" />"
+			u8"<Default Extension=\"model\" ContentType=\"application/vnd.ms-package.3dmanufacturing-3dmodel+xml\" />"
+		u8"</Types>");
 	constexpr int no_free_after_use = false;
 	zip_source_t* content_types = zip_source_buffer(archive, content_types_data.c_str(), content_types_data.length(), no_free_after_use);
 	zip_file_add(archive, u8"[Content_Types].xml", content_types, ZIP_FL_ENC_UTF_8);
@@ -78,9 +78,9 @@ void ThreeMF::write(const std::string& filename) const {
 	//Writing rels.
 	zip_dir_add(archive, u8"_rels", ZIP_FL_ENC_UTF_8);
 	std::string rels_data(u8"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-		"<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
-		"<Relationship Target=\"/3D/3dmodel.model\" Id=\"rel_3dmodel\" Type=\"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\" />"
-	"</Relationships>");
+	u8"<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
+		u8"<Relationship Target=\"/3D/3dmodel.model\" Id=\"rel_3dmodel\" Type=\"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\" />"
+	u8"</Relationships>");
 	zip_source_t* rels = zip_source_buffer(archive, rels_data.c_str(), rels_data.length(), no_free_after_use);
 	zip_file_add(archive, u8"_rels/.rels", rels, ZIP_FL_ENC_UTF_8);
 

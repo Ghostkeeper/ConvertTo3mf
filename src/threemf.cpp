@@ -6,8 +6,8 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
+#include <cstdio> //To remove any existing file before writing the new one.
 #include <unordered_map> //To make vertices unique and track their indices.
-#include <zip.h> //To write zip archives to file, part of the format of 3MF.
 
 #include "threemf.hpp"
 
@@ -16,6 +16,7 @@ namespace convertobjto3mf {
 void ThreeMF::export_to_file(const std::string& filename, const Model& model) {
 	ThreeMF threemf;
 	threemf.fill_from_model(model);
+	std::remove(filename.c_str()); //Remove any old archive if one exists.
 	threemf.write(filename);
 }
 
@@ -60,9 +61,21 @@ void ThreeMF::fill_from_model(const Model& model) {
 	}
 }
 
-void ThreeMF::write(const std::string& filename) {
-	int ziperror;
+void ThreeMF::write(const std::string& filename) const {
+	int ziperror = 0;
 	zip_t* archive = zip_open(filename.c_str(), ZIP_CREATE, &ziperror);
+
+	//Writing [Content_Types].xml.
+	std::string content_types_data(u8"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+		"<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
+			"<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\" />"
+			"<Default Extension=\"model\" ContentType=\"application/vnd.ms-package.3dmanufacturing-3dmodel+xml\" />"
+		"</Types>");
+	constexpr int free_after_use = false;
+	zip_source_t* content_types = zip_source_buffer(archive, content_types_data.c_str(), content_types_data.length(), free_after_use);
+	zip_file_add(archive, "[Content_Types].xml", content_types, ZIP_FL_ENC_UTF_8 | ZIP_FL_OVERWRITE);
+
+	zip_close(archive);
 }
 
 }

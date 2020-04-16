@@ -9,8 +9,9 @@
 #ifndef THREEMF_HPP
 #define THREEMF_HPP
 
-#include <string> //To accept a file name.
 #include <array> //To store triangles.
+#include <string> //To accept a file name.
+#include <zip.h> //To write zip archives to file, part of the format of 3MF.
 
 #include "model.hpp" //To convert from 3D models.
 
@@ -57,8 +58,9 @@ protected:
 
 	/*!
 	 * Write the 3MF file to a file.
+	 * \param filename The path to the file to write.
 	 */
-	void write(const std::string& filename);
+	void write(const std::string& filename) const;
 };
 
 }

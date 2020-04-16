@@ -85,15 +85,15 @@ void Obj::load_vertices(const std::vector<std::string>& lines) {
 		//Convert everything to our coordinate type.
 		char* end;
 		const coord_t x = strtod(x_str.c_str(), &end);
-		if(end) { //Not a number.
+		if(*end) { //Not a number.
 			continue;
 		}
 		const coord_t y = strtod(y_str.c_str(), &end);
-		if(end) {
+		if(*end) {
 			continue;
 		}
 		const coord_t z = strtod(z_str.c_str(), &end);
-		if(end) {
+		if(*end) {
 			continue;
 		}
 

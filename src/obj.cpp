@@ -20,8 +20,7 @@ Model Obj::import(const std::string filename) {
 	std::vector<std::string> lines = obj.preprocess(filename);
 	obj.load_vertices(lines);
 	obj.load_faces(lines);
-
-	return Model();
+	return obj.to_model();
 }
 
 std::vector<std::string> Obj::preprocess(const std::string filename) const {
@@ -140,6 +139,27 @@ void Obj::load_faces(const std::vector<std::string>& lines) {
 
 		faces.push_back(vertex_indices);
 	}
+}
+
+Model Obj::to_model() const {
+	Model model; //The resulting model.
+	model.meshes.emplace_back(); //OBJ files always contain just a single mesh.
+	Mesh& mesh = model.meshes.back();
+
+	for(std::vector<size_t> vertex_indices : faces) {
+		mesh.faces.emplace_back();
+		Face& face = mesh.faces.back();
+
+		//Dereference all the indices from the OBJ file.
+		for(size_t vertex_index : vertex_indices) {
+			if(vertex_index >= vertices.size()) { //Index doesn't exist.
+				continue;
+			}
+			face.vertices.push_back(vertices[vertex_index]);
+		}
+	}
+
+	return model;
 }
 
 }

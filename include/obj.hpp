@@ -45,6 +45,9 @@ protected:
 	 *
 	 * This combines lines that have a continuation slash between them, and
 	 * trims whitespace from these lines.
+	 * \param filename The path to the file to read from.
+	 * \return A list of lines from the file, slightly pre-processed for easier
+	 * parsing.
 	 */
 	std::vector<std::string> preprocess(const std::string filename) const;
 
@@ -52,6 +55,7 @@ protected:
 	 * Reads all the vertex definitions from a preprocessed OBJ file.
 	 *
 	 * This puts the vertices in the Obj class.
+	 * \param lines The lines from an OBJ file as returned by `preprocess`.
 	 */
 	void load_vertices(const std::vector<std::string>& lines);
 
@@ -59,8 +63,15 @@ protected:
 	 * Reads all the face definitions from a preprocessed OBJ file.
 	 *
 	 * This puts the faces in the Obj class.
+	 * \param lines The lines from an OBJ file as returned by `preprocess`.
 	 */
 	void load_faces(const std::vector<std::string>& lines);
+
+	/*!
+	 * Converts the OBJ file to a Model class in our internal data format.
+	 * \return A 3D model.
+	 */
+	Model to_model() const;
 };
 
 }

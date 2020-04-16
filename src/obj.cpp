@@ -82,16 +82,17 @@ void Obj::load_vertices(const std::vector<std::string>& lines) {
 		const std::string y_str = line.substr(y_start, y_end - y_start);
 		const std::string z_str = line.substr(z_start, z_end - z_start);
 
+		//Convert everything to our coordinate type.
 		char* end;
-		const double x = strtod(x_str.c_str(), &end);
+		const coord_t x = strtod(x_str.c_str(), &end);
+		if(end) { //Not a number.
+			continue;
+		}
+		const coord_t y = strtod(y_str.c_str(), &end);
 		if(end) {
 			continue;
 		}
-		const double y = strtod(y_str.c_str(), &end);
-		if(end) {
-			continue;
-		}
-		const double z = strtod(z_str.c_str(), &end);
+		const coord_t z = strtod(z_str.c_str(), &end);
 		if(end) {
 			continue;
 		}

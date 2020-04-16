@@ -9,9 +9,9 @@
 #ifndef FACE_HPP
 #define FACE_HPP
 
-namespace convertobjto3mf {
+#include "point3.hpp" //To store vertices.
 
-class Point3;
+namespace convertobjto3mf {
 
 /*!
  * This is a data structure that represents one face within a model.

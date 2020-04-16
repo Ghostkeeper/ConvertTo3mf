@@ -9,9 +9,11 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-namespace convertobjto3mf {
+#include <vector> //To store a number of meshes.
 
-class Mesh;
+#include "mesh.hpp" //To store the meshes.
+
+namespace convertobjto3mf {
 
 /*!
  * This is a data structure that holds the data from a 3D model.

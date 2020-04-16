@@ -9,9 +9,9 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
-namespace convertobjto3mf {
+#include "face.hpp" //To store faces.
 
-class Face;
+namespace convertobjto3mf {
 
 /*!
  * This is a data structure that holds the data from a mesh within a 3D model.

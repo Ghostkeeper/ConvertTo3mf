@@ -6,23 +6,12 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
-#include <iostream>
+#ifndef MAIN_HPP
+#define MAIN_HPP
 
-#include "main.hpp"
+/*!
+ * Show how to use this application, including all parameters, in the stdcout.
+ */
+void show_help();
 
-int main(int argc, char** argv) {
-	show_help();
-	return 0;
-}
-
-void show_help() {
-	std::cout << "Convert 3D models to 3MF.\n"
-		"Usage:\n"
-		"  convertobjto3mf filename [--output=output_filename]\n"
-		"\n"
-		"Required parameters:\n"
-		"  * filename: The name of the input file to convert to 3MF.\n"
-		"\n"
-		"Optional parameters:\n"
-		"  * --output=output_filename: Store the resulting 3MF file in the specified location. By default, the result will be stored in the same location as the input file, but with the file extension changed to .3mf." << std::endl;
-}
+#endif //MAIN_HPP

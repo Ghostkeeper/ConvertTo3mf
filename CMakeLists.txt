@@ -23,3 +23,5 @@ endforeach()
 
 #The main target.
 add_executable(convertobjto3mf ${convertobjto3mf_source_paths})
+
+target_include_directories(convertobjto3mf PUBLIC "${CMAKE_SOURCE_DIR}/include")

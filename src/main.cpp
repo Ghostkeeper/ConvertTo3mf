@@ -10,8 +10,38 @@
 
 #include "main.hpp"
 
+/*!
+ * Entry point into the program.
+ *
+ * This will parse the input parameters and decides what to do based on those.
+ *
+ * If the input arguments are wrong, it will show the help.
+ */
 int main(int argc, char** argv) {
-	show_help();
+	if(argc < 2) { //Not enough arguments.
+		show_help();
+		return 1;
+	}
+	//The 0th argument is the executable name. We're not interested in that.
+	//The first argument is required to be the input filename.
+	const std::string input_filename(argv[1]);
+
+	//For the default output filename, take the input with the file extension changed.
+	std::string output_filename = input_filename;
+	int extension_start = output_filename.rfind('.');
+	if(extension_start >= 0) { //Remove the extension if there is one.
+		output_filename = output_filename.substr(0, extension_start);
+	}
+	output_filename += ".3mf"; //Add a new extension.
+
+	//Parse the rest as optional parameters.
+	for(size_t i = 2; i < argc; ++i) {
+		std::string argument(argv[i]);
+		if(argument.rfind("--output=") == 0) {
+			output_filename = argument.substr(9);
+		}
+	}
+
 	return 0;
 }
 

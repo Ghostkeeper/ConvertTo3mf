@@ -9,6 +9,9 @@
 #ifndef POINT3_HPP
 #define POINT3_HPP
 
+#include <cstddef> //For size_t.
+#include <functional> //To specialise hash.
+
 #include "coordinate.hpp" //To represent coordinates.
 
 namespace convertobjto3mf {
@@ -34,6 +37,21 @@ struct Point3 {
 	 * \return `true` if the points are identical, or `false` if they aren't.
 	 */
 	bool operator ==(const Point3& other) const;
+};
+
+}
+
+namespace std {
+
+/*!
+ * Specialisation of std::hash to hash Point3.
+ */
+template<>
+struct hash<convertobjto3mf::Point3> {
+	/*!
+	 * Calls the hash struct, which returns the hash.
+	 */
+	std::size_t operator ()(const convertobjto3mf::Point3& point) const;
 };
 
 }

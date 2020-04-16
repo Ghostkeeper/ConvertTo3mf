@@ -20,3 +20,17 @@ bool Point3::operator ==(const Point3& other) const {
 }
 
 }
+
+namespace std {
+
+size_t hash<convertobjto3mf::Point3>::operator ()(const convertobjto3mf::Point3& point) const {
+	const size_t x_hash = hash<convertobjto3mf::coord_t>()(point.x);
+	const size_t y_hash = hash<convertobjto3mf::coord_t>()(point.y);
+	const size_t z_hash = hash<convertobjto3mf::coord_t>()(point.z);
+	size_t hash = x_hash;
+	hash ^= y_hash + 0x9e3779b97f4a7c15 + (hash << 6) + (hash >> 2);
+	hash ^= z_hash + 0x9e3779b97f4a7c15 + (hash << 6) + (hash >> 2);
+	return hash;
+}
+
+}

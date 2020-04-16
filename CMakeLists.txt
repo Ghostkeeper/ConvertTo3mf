@@ -18,6 +18,7 @@ set(convertobjto3mf_sources
 	"job.cpp"
 	"obj.cpp"
 	"point3.cpp"
+	"threemf.cpp"
 )
 set(convertobjto3mf_source_paths "")
 foreach(f IN LISTS convertobjto3mf_sources)

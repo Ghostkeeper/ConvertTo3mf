@@ -27,6 +27,13 @@ struct Point3 {
 	 * Creates a new point, filling in the coordinates.
 	 */
 	Point3(const coord_t x, const coord_t y, const coord_t z);
+
+	/*!
+	 * Compares two points for equality.
+	 * \param other The point to compare to.
+	 * \return `true` if the points are identical, or `false` if they aren't.
+	 */
+	bool operator ==(const Point3& other) const;
 };
 
 }

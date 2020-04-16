@@ -15,4 +15,8 @@ Point3::Point3(const coord_t x, const coord_t y, const coord_t z) :
 		y(y),
 		z(z) {};
 
+bool Point3::operator ==(const Point3& other) const {
+	return x == other.x && y == other.y && z == other.z;
+}
+
 }

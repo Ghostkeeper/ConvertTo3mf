@@ -29,7 +29,7 @@ public:
 	 * \param filename The path to the file to write.
 	 * \param model The model to write to this file.
 	 */
-	static void export_to_file(const std::string filename, const Model& model);
+	static void export_to_file(const std::string& filename, const Model& model);
 
 protected:
 	/*!
@@ -54,6 +54,11 @@ protected:
 	 * Fill the 3MF file from the common model data structure.
 	 */
 	void fill_from_model(const Model& model);
+
+	/*!
+	 * Write the 3MF file to a file.
+	 */
+	void write(const std::string& filename);
 };
 
 }

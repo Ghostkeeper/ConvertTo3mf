@@ -6,15 +6,17 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
-#include "threemf.hpp"
-
 #include <unordered_map> //To make vertices unique and track their indices.
+#include <zip.h> //To write zip archives to file, part of the format of 3MF.
+
+#include "threemf.hpp"
 
 namespace convertobjto3mf {
 
-void ThreeMF::export_to_file(const std::string filename, const Model& model) {
+void ThreeMF::export_to_file(const std::string& filename, const Model& model) {
 	ThreeMF threemf;
 	threemf.fill_from_model(model);
+	threemf.write(filename);
 }
 
 void ThreeMF::fill_from_model(const Model& model) {
@@ -56,6 +58,11 @@ void ThreeMF::fill_from_model(const Model& model) {
 			}
 		}
 	}
+}
+
+void ThreeMF::write(const std::string& filename) {
+	int ziperror;
+	zip_t* archive = zip_open(filename.c_str(), ZIP_CREATE, &ziperror);
 }
 
 }

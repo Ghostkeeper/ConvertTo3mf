@@ -6,7 +6,9 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
+#include <algorithm> //For std::min.
 #include <fstream> //To read OBJ files.
+#include <regex> //To detect whether this is an OBJ file.
 #include <string> //To process the content of OBJ files.
 
 #include "obj.hpp" //Definitions for this class.
@@ -20,6 +22,55 @@ Model Obj::import(const std::string filename) {
 	std::vector<std::string> lines = obj.preprocess(filename);
 	obj.load(lines);
 	return obj.to_model();
+}
+
+float Obj::is_obj(const std::string filename) {
+	float probability = 1.0 / 3.0; //Final result.
+	//Probability of a file extension being different from the contents of the file. Probably an overestimation but we want to let the magic number determine it more.
+	constexpr float probability_incorrect_extension = 0.01;
+	//For each line in the file, probability of the line actually belonging to a different file format even though it would fit OBJ objects.
+	constexpr float probability_incorrect_line = 0.03;
+
+	//File extension plays a role in likelihood.
+	if(filename.find_last_of(".obj") == filename.length() - 4) { //Ends in .obj
+		probability = 1 - probability_incorrect_extension;
+	} else {
+		probability = probability_incorrect_extension;
+	}
+
+	//Read 1kB from the file to see if the file appears to be correctly formatted for OBJ.
+	std::ifstream file_handle(filename);
+	file_handle.seekg(0, file_handle.end);
+	size_t sample_size = file_handle.tellg();
+	file_handle.seekg(file_handle.beg);
+	sample_size = std::min(sample_size, size_t(1024)); //Limit to 1kB.
+	char sample_chars[sample_size];
+	file_handle.read(sample_chars, sample_size);
+	std::string sample(sample_chars); //We've read up to 1kB from this file now.
+
+	//Match a line with this complicated regex that captures almost every possible line in OBJ files.
+	const std::regex correct_line("^\\\\?$|((#|mtllib |usemtl |o |g |s |mg |cstype ).*|v[np]? [-+]?\\d*\\.?\\d+([eE][-+]?\\d+)? [-+]?\\d*\\.?\\d+([eE][-+]?\\d+)? [-+]?\\d*\\.?\\d+([eE][-+]?\\d+)?|vt [-+]?\\d*\\.?\\d+([eE][-+]?\\d+)? [-+]?\\d*\\.?\\d+([eE][-+]?\\d+)?|(f|p|l|curv|curv2|surf)( -?\\d+(\\/\\d*)?(\\/\\d+)?)+)\\\\?");
+	size_t correct_lines = 0;
+	size_t lines_found = 0;
+	size_t line_start = 0;
+	size_t line_end = 0;
+	while((line_end = sample.find('\n', line_start)) != sample.npos) {
+		std::string line = sample.substr(line_start, line_end - line_start);
+		lines_found++;
+		if(std::regex_match(line, correct_line)) {
+			correct_lines++;
+		}
+		line_start = line_end + 1;
+	}
+	for(size_t i = 0; i < lines_found; ++i) {
+		if(i < correct_lines) { //This line was correct.
+			probability = 1.0 - ((1.0 - probability) * probability_incorrect_line);
+		} else { //This line was incorrect.
+			probability *= probability_incorrect_line;
+		}
+	}
+
+	return probability;
 }
 
 std::vector<std::string> Obj::preprocess(const std::string filename) const {

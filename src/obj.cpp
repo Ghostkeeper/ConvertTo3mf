@@ -31,9 +31,10 @@ std::vector<std::string> Obj::preprocess(const std::string filename) const {
 		size_t first = line.find_first_not_of(" \t\n\r\f");
 		if(first == std::string::npos) {
 			line = "";
+		} else {
+			size_t last = line.find_last_not_of(" \t\n\r\f");
+			line = line.substr(first, (last - first + 1));
 		}
-		size_t last = line.find_last_not_of(" \t\n\r\f");
-		line = line.substr(first, (last - first + 1));
 
 		//Process line continuation.
 		if(!lines.empty() && lines.back()[lines.back().length() - 1] == '\\') { //Previous line had a line continuation.

@@ -14,7 +14,7 @@
 
 #include "coordinate.hpp" //To represent coordinates.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 /*!
  * This is a data structure that represents a 3-dimensional point.
@@ -47,11 +47,11 @@ namespace std {
  * Specialisation of std::hash to hash Point3.
  */
 template<>
-struct hash<convertobjto3mf::Point3> {
+struct hash<convertto3mf::Point3> {
 	/*!
 	 * Calls the hash struct, which returns the hash.
 	 */
-	std::size_t operator ()(const convertobjto3mf::Point3& point) const;
+	std::size_t operator ()(const convertto3mf::Point3& point) const;
 };
 
 }

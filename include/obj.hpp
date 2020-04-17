@@ -13,7 +13,7 @@
 
 #include "point3.hpp" //To store vertices from the OBJ file.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 class Model;
 

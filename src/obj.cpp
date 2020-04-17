@@ -12,7 +12,7 @@
 #include "obj.hpp" //Definitions for this class.
 #include "model.hpp" //To write models.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 Model Obj::import(const std::string filename) {
 	Obj obj; //Store the OBJ file in its own representation.

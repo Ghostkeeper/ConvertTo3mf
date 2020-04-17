@@ -9,7 +9,7 @@
 #ifndef COORDINATE_HPP
 #define COORDINATE_HPP
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 /*!
  * This is the actual data structure used to represent coordinates.

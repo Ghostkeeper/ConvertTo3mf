@@ -11,7 +11,7 @@
 
 #include "point3.hpp" //To store vertices.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 /*!
  * This is a data structure that represents one face within a model.

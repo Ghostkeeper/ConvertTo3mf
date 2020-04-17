@@ -13,7 +13,7 @@
 
 #include "mesh.hpp" //To store the meshes.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 /*!
  * This is a data structure that holds the data from a 3D model.

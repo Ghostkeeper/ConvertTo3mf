@@ -11,7 +11,7 @@
 
 #include "threemf.hpp"
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 void ThreeMF::export_to_file(const std::string& filename, const Model& model) {
 	ThreeMF threemf;

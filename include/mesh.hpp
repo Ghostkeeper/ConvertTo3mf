@@ -11,7 +11,7 @@
 
 #include "face.hpp" //To store faces.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 /*!
  * This is a data structure that holds the data from a mesh within a 3D model.

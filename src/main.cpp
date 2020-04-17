@@ -20,7 +20,7 @@
  */
 int main(int argc, char** argv) {
 	if(argc < 2) { //Not enough arguments.
-		convertobjto3mf::show_help();
+		convertto3mf::show_help();
 		return 1;
 	}
 	//The 0th argument is the executable name. We're not interested in that.
@@ -43,13 +43,13 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	convertobjto3mf::Job job(input_filename, output_filename);
+	convertto3mf::Job job(input_filename, output_filename);
 	job.run();
 
 	return 0;
 }
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 void show_help() {
 	std::cout << "Convert 3D models to 3MF.\n"

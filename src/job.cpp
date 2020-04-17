@@ -13,7 +13,7 @@
 #include "obj.hpp"
 #include "threemf.hpp" //To import OBJ files.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 Job::Job(const std::string& input_filename, const std::string& output_filename) :
 		input_filename(input_filename),

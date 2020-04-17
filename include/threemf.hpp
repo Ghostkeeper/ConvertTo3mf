@@ -16,7 +16,7 @@
 
 #include "model.hpp" //To convert from 3D models.
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 /*!
  * This class represents a 3MF file.

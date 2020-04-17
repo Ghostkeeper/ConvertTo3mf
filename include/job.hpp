@@ -9,7 +9,7 @@
 #ifndef JOB_HPP
 #define JOB_HPP
 
-namespace convertobjto3mf {
+namespace convertto3mf {
 
 /*!
  * This class represents a conversion job: One file that needs to be converted.

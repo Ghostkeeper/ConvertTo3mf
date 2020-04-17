@@ -84,7 +84,51 @@ void ThreeMF::write(const std::string& filename) const {
 	zip_source_t* rels = zip_source_buffer(archive, rels_data.c_str(), rels_data.length(), no_free_after_use);
 	zip_file_add(archive, u8"_rels/.rels", rels, ZIP_FL_ENC_UTF_8);
 
+	//Writing the 3D model.
+	zip_dir_add(archive, u8"3D", ZIP_FL_ENC_UTF_8);
+	std::stringstream model_data;
+	write_model_data(model_data);
+	std::string model_data_str = model_data.str(); //Make sure that this string keeps in memory until the archive closes!
+	zip_source_t* model = zip_source_buffer(archive, model_data_str.c_str(), model_data_str.length(), no_free_after_use);
+	zip_file_add(archive, u8"3D/3dmodel.model", model, ZIP_FL_ENC_UTF_8);
+
 	zip_close(archive);
+}
+
+void ThreeMF::write_model_data(std::stringstream& model_data) const {
+	model_data << u8"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+		u8"<model unit=\"millimeter\" xmlns=\"http://schemas.microsoft.com/3dmanufacturing/core/2015/02\">"
+		u8"<resources>";
+
+	//Write the meshes.
+	for(size_t mesh_index = 0; mesh_index < vertices.size(); ++mesh_index) {
+		model_data << u8"<object id=\"" << (mesh_index + 1) << u8"\" type=\"model\"><mesh>";
+
+		model_data << u8"<vertices>";
+		for(const Point3& vertex : vertices[mesh_index]) {
+			model_data << u8"<vertex x=\"" << vertex.x << u8"\" y=\"" << vertex.y << u8"\" z=\"" << vertex.z << u8"\"/>";
+		}
+		model_data << u8"</vertices>";
+
+		model_data << u8"<triangles>";
+		for(const std::array<size_t, 3>& triangle : triangles[mesh_index]) {
+			model_data << u8"<triangle v1=\"" << triangle[0] << u8"\" v2=\"" << triangle[1] << u8"\" v3=\"" << triangle[2] << u8"\"/>";
+		}
+		model_data << u8"</triangles>";
+
+		model_data << u8"</mesh></object>";
+	}
+
+	model_data << u8"</resources>";
+
+	//Write the scene.
+	model_data << u8"<build>";
+	for(size_t mesh_index = 0; mesh_index < vertices.size(); ++mesh_index) {
+		model_data << u8"<item objectid=\"" << (mesh_index + 1) << u8"\"/>";
+	}
+	model_data << u8"</build>";
+
+	model_data << u8"</model>";
 }
 
 }

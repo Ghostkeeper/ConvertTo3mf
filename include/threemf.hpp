@@ -10,6 +10,7 @@
 #define THREEMF_HPP
 
 #include <array> //To store triangles.
+#include <sstream> //A buffer to write the 3D model data into before zipping it.
 #include <string> //To accept a file name.
 #include <zip.h> //To write zip archives to file, part of the format of 3MF.
 
@@ -61,6 +62,17 @@ protected:
 	 * \param filename The path to the file to write.
 	 */
 	void write(const std::string& filename) const;
+
+	/*!
+	 * Write the 3D model data to a string stream.
+	 *
+	 * This serialises the contents of this `ThreeMF` instance into a stream.
+	 * The archive can then later read out the contents of this stream to
+	 * compress it into the archive. This way the data does not get deallocated
+	 * before the zip archive is closed.
+	 * \param model_data An empty string stream to write into.
+	 */
+	void write_model_data(std::stringstream& model_data) const;
 };
 
 }

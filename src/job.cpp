@@ -10,8 +10,8 @@
 
 #include "job.hpp" //The definitions for this file.
 #include "model.hpp" //To store models as intermediary representation.
-#include "obj.hpp"
-#include "threemf.hpp" //To import OBJ files.
+#include "obj.hpp" //To import OBJ files.
+#include "threemf.hpp" //To write 3MF files.
 
 namespace convertto3mf {
 

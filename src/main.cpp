@@ -54,7 +54,7 @@ namespace convertto3mf {
 void show_help() {
 	std::cout << "Convert 3D models to 3MF.\n"
 		"Usage:\n"
-		"  convertobjto3mf filename [--output=output_filename]\n"
+		"  convertto3mf filename [--output=output_filename]\n"
 		"\n"
 		"Required parameters:\n"
 		"  * filename: The name of the input file to convert to 3MF.\n"

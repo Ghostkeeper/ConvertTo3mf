@@ -8,30 +8,30 @@ cmake_minimum_required(VERSION 3.13) #Oldest version it was tested with.
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake") #Finding dependencies.
 
 #Release configuration.
-set(CONVERTOBJTO3MF_VERSION_MAJOR 0 CACHE STRING "Major release version. This must be incremented if there are changes that are not backwards compatible.")
-set(CONVERTOBJTO3MF_VERSION_MINOR 0 CACHE STRING "Minor release version. This must be incremented if there are changes that are not forwards compatible.")
-set(CONVERTOBJTO3MF_VERSION_PATCH 1 CACHE STRING "Patch release version. This must be incremented for every release where there are no changes to the API.")
+set(CONVERTTO3MF_VERSION_MAJOR 0 CACHE STRING "Major release version. This must be incremented if there are changes that are not backwards compatible.")
+set(CONVERTTO3MF_VERSION_MINOR 0 CACHE STRING "Minor release version. This must be incremented if there are changes that are not forwards compatible.")
+set(CONVERTTO3MF_VERSION_PATCH 1 CACHE STRING "Patch release version. This must be incremented for every release where there are no changes to the API.")
 
-project(convertobjto3mf VERSION ${CONVERTOBJTO3MF_VERSION_MAJOR}.${CONVERTOBJTO3MF_VERSION_MINOR}.${CONVERTOBJTO3MF_VERSION_PATCH} DESCRIPTION "Command line application to convert models to 3MF.")
+project(convertto3mf VERSION ${CONVERTTO3MF_VERSION_MAJOR}.${CONVERTTO3MF_VERSION_MINOR}.${CONVERTTO3MF_VERSION_PATCH} DESCRIPTION "Command line application to convert 3D models to 3MF.")
 
 #Dependencies.
 find_package(libzip REQUIRED)
 
 #Sources.
-set(convertobjto3mf_sources
+set(convertto3mf_sources
 	"main.cpp"
 	"job.cpp"
 	"obj.cpp"
 	"point3.cpp"
 	"threemf.cpp"
 )
-set(convertobjto3mf_source_paths "")
-foreach(f IN LISTS convertobjto3mf_sources)
-	list(APPEND convertobjto3mf_source_paths ${CMAKE_CURRENT_SOURCE_DIR}/src/${f})
+set(convertto3mf_source_paths "")
+foreach(f IN LISTS convertto3mf_sources)
+	list(APPEND convertto3mf_source_paths ${CMAKE_CURRENT_SOURCE_DIR}/src/${f})
 endforeach()
 
 #The main target.
-add_executable(convertobjto3mf ${convertobjto3mf_source_paths})
-target_link_libraries(convertobjto3mf "${LIBZIP_LIBRARY}")
-target_include_directories(convertobjto3mf PUBLIC "${CMAKE_SOURCE_DIR}/include")
-target_include_directories(convertobjto3mf PRIVATE "${LIBZIP_INCLUDE_DIR}")
+add_executable(convertto3mf ${convertto3mf_source_paths})
+target_link_libraries(convertto3mf "${LIBZIP_LIBRARY}")
+target_include_directories(convertto3mf PUBLIC "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(convertto3mf PRIVATE "${LIBZIP_INCLUDE_DIR}")

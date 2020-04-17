@@ -52,20 +52,12 @@ protected:
 	std::vector<std::string> preprocess(const std::string filename) const;
 
 	/*!
-	 * Reads all the vertex definitions from a preprocessed OBJ file.
+	 * Loads the contents of the OBJ file from pre-processed lines.
 	 *
-	 * This puts the vertices in the Obj class.
+	 * This puts the vertices and faces into the `Obj` instance.
 	 * \param lines The lines from an OBJ file as returned by `preprocess`.
 	 */
-	void load_vertices(const std::vector<std::string>& lines);
-
-	/*!
-	 * Reads all the face definitions from a preprocessed OBJ file.
-	 *
-	 * This puts the faces in the Obj class.
-	 * \param lines The lines from an OBJ file as returned by `preprocess`.
-	 */
-	void load_faces(const std::vector<std::string>& lines);
+	void load(const std::vector<std::string>& lines);
 
 	/*!
 	 * Converts the OBJ file to a Model class in our internal data format.

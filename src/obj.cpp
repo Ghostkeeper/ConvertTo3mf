@@ -18,8 +18,7 @@ Model Obj::import(const std::string filename) {
 	Obj obj; //Store the OBJ file in its own representation.
 
 	std::vector<std::string> lines = obj.preprocess(filename);
-	obj.load_vertices(lines);
-	obj.load_faces(lines);
+	obj.load(lines);
 	return obj.to_model();
 }
 
@@ -47,100 +46,98 @@ std::vector<std::string> Obj::preprocess(const std::string filename) const {
 	return lines;
 }
 
-void Obj::load_vertices(const std::vector<std::string>& lines) {
+void Obj::load(const std::vector<std::string>& lines) {
 	for(const std::string& line : lines) {
-		if(line.find("v ") != 0) { //Not a vertex on this line.
-			continue;
-		}
-
-		size_t x_start = line.find_first_not_of(' ', 1);
-		if(x_start == std::string::npos) {
-			continue; //The line was just "v     " with a number of spaces but no X coordinate.
-		}
-		size_t x_end = line.find(' ', x_start);
-		if(x_end == std::string::npos) {
-			continue; //There was no space after the X coordinate, meaning that there is no Y coordinate.
-		}
-		size_t y_start = line.find_first_not_of(' ', x_end);
-		if(y_start == std::string::npos) {
-			continue; //There were just a number of spaces after the X coordinate, no Y coordinate.
-		}
-		size_t y_end = line.find(' ', y_start);
-		if(y_end == std::string::npos) {
-			continue; //There was no space after the Y coordinate, meaning that there is no Z coordinate.
-		}
-		size_t z_start = line.find_first_not_of(' ', y_end);
-		if(z_start == std::string::npos) {
-			continue; //There were just a number of spaces after the Y coordinate, no Z coordinate.
-		}
-		size_t z_end = line.find(' ', z_start);
-		if(z_end == std::string::npos) {
-			z_end = line.length(); //No spaces after the Z coordinate. That's all right though, just cut it off at the end of the string.
-		}
-
-		const std::string x_str = line.substr(x_start, x_end - x_start);
-		const std::string y_str = line.substr(y_start, y_end - y_start);
-		const std::string z_str = line.substr(z_start, z_end - z_start);
-
-		//Convert everything to our coordinate type.
-		char* end;
-		const coord_t x = strtod(x_str.c_str(), &end);
-		if(*end) { //Not a number.
-			continue;
-		}
-		const coord_t y = strtod(y_str.c_str(), &end);
-		if(*end) {
-			continue;
-		}
-		const coord_t z = strtod(z_str.c_str(), &end);
-		if(*end) {
-			continue;
-		}
-
-		//Successfully parsed a vertex! Let's store it now that everything is safe.
-		vertices.emplace_back(x, y, z);
-	}
-}
-
-void Obj::load_faces(const std::vector<std::string>& lines) {
-	for(const std::string& line : lines) {
-		if(line.find("f ") != 0) { //Not a face on this line.
-			continue;
-		}
-
-		std::vector<size_t> vertex_indices; //Resulting indices from this line.
-		vertex_indices.reserve(3);
-		size_t pos = 1; //Start searching for vertices from here.
-		while(pos != std::string::npos) { //For each vertex.
-			pos = line.find_first_not_of(' ', pos);
-			if(pos == std::string::npos) { //There's just space now, no new vertex.
-				break;
+		if(line.find("v ") == 0) { //This line defines a vertex.
+			size_t x_start = line.find_first_not_of(' ', 1);
+			if(x_start == std::string::npos) {
+				continue; //The line was just "v     " with a number of spaces but no X coordinate.
 			}
-			const size_t corner_start = pos;
-			pos = line.find(' ', corner_start);
-			const size_t corner_end = (pos == std::string::npos) ? line.length() : pos; //If there is no more space, stop at the end of the string.
-			const std::string corner = line.substr(corner_start, corner_end - corner_start);
-
-			//For now we're only interested in the index to the vertex, not in normals or texture coordinates.
-			size_t vertex_end = corner.find('/');
-			if(vertex_end == std::string::npos) {
-				vertex_end = corner.length();
+			size_t x_end = line.find(' ', x_start);
+			if(x_end == std::string::npos) {
+				continue; //There was no space after the X coordinate, meaning that there is no Y coordinate.
 			}
-			const std::string vertex_index_str = corner.substr(0, vertex_end);
+			size_t y_start = line.find_first_not_of(' ', x_end);
+			if(y_start == std::string::npos) {
+				continue; //There were just a number of spaces after the X coordinate, no Y coordinate.
+			}
+			size_t y_end = line.find(' ', y_start);
+			if(y_end == std::string::npos) {
+				continue; //There was no space after the Y coordinate, meaning that there is no Z coordinate.
+			}
+			size_t z_start = line.find_first_not_of(' ', y_end);
+			if(z_start == std::string::npos) {
+				continue; //There were just a number of spaces after the Y coordinate, no Z coordinate.
+			}
+			size_t z_end = line.find(' ', z_start);
+			if(z_end == std::string::npos) {
+				z_end = line.length(); //No spaces after the Z coordinate. That's all right though, just cut it off at the end of the string.
+			}
 
-			//Convert to index.
+			const std::string x_str = line.substr(x_start, x_end - x_start);
+			const std::string y_str = line.substr(y_start, y_end - y_start);
+			const std::string z_str = line.substr(z_start, z_end - z_start);
+
+			//Convert everything to our coordinate type.
 			char* end;
-			const size_t vertex_index = strtol(vertex_index_str.c_str(), &end, 10);
-			if(*end) { //Not an integer.
+			const coord_t x = strtod(x_str.c_str(), &end);
+			if(*end) { //Not a number.
 				continue;
 			}
-			if(vertex_index == 0) { //Vertices are 1-indexed. 0 should not occur.
+			const coord_t y = strtod(y_str.c_str(), &end);
+			if(*end) {
 				continue;
 			}
-			vertex_indices.push_back(vertex_index - 1);
-		}
+			const coord_t z = strtod(z_str.c_str(), &end);
+			if(*end) {
+				continue;
+			}
 
-		faces.push_back(vertex_indices);
+			//Successfully parsed a vertex! Let's store it now that everything is safe.
+			vertices.emplace_back(x, y, z);
+		} else if(line.find("f ") == 0) { //This line defines a face.
+			std::vector<size_t> vertex_indices; //Resulting indices from this line.
+			vertex_indices.reserve(3);
+			size_t pos = 1; //Start searching for vertices from here.
+			while(pos != std::string::npos) { //For each vertex.
+				pos = line.find_first_not_of(' ', pos);
+				if(pos == std::string::npos) { //There's just space now, no new vertex.
+					break;
+				}
+				const size_t corner_start = pos;
+				pos = line.find(' ', corner_start);
+				const size_t corner_end = (pos == std::string::npos) ? line.length() : pos; //If there is no more space, stop at the end of the string.
+				const std::string corner = line.substr(corner_start, corner_end - corner_start);
+
+				//For now we're only interested in the index to the vertex, not in normals or texture coordinates.
+				size_t vertex_end = corner.find('/');
+				if(vertex_end == std::string::npos) {
+					vertex_end = corner.length();
+				}
+				const std::string vertex_index_str = corner.substr(0, vertex_end);
+
+				//Convert to index.
+				char* end;
+				long vertex_index = strtol(vertex_index_str.c_str(), &end, 10);
+				if(*end) { //Not an integer.
+					continue;
+				}
+				if(vertex_index == 0) { //Vertices are 1-indexed. 0 should not occur.
+					continue;
+				}
+				if(vertex_index < 0) { //Negative indices refer to the most recent vertices.
+					vertex_index += vertices.size() + 1;
+					if(vertex_index < 1) { //Too far back. This would be before the start.
+						continue;
+					}
+				}
+
+				//Index is correct. We can store it.
+				vertex_indices.push_back(vertex_index - 1);
+			}
+
+			faces.push_back(vertex_indices);
+		}
 	}
 }
 

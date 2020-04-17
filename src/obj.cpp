@@ -6,6 +6,7 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
+#include <iostream> //To message progress.
 #include <algorithm> //For std::min.
 #include <fstream> //To read OBJ files.
 #include <regex> //To detect whether this is an OBJ file.
@@ -17,6 +18,7 @@
 namespace convertto3mf {
 
 Model Obj::import(const std::string filename) {
+	std::cout << "Importing Wavefront OBJ file: " << filename << std::endl;
 	Obj obj; //Store the OBJ file in its own representation.
 
 	std::vector<std::string> lines = obj.preprocess(filename);

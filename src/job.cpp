@@ -8,6 +8,7 @@
 
 #include <iostream> //To communicate progress via stdcout.
 
+#include "detect_file_type.hpp" //To detect which type of file this is.
 #include "job.hpp" //The definitions for this file.
 #include "model.hpp" //To store models as intermediary representation.
 #include "obj.hpp" //To import OBJ files.
@@ -22,7 +23,12 @@ Job::Job(const std::string& input_filename, const std::string& output_filename) 
 void Job::run() {
 	std::cout << "Converting " << input_filename << " to " << output_filename << std::endl;
 
-	Model model = Obj::import(input_filename);
+	FileType file_type = detect_file_type(input_filename);
+	Model model;
+	switch(file_type) {
+		case FileType::OBJ: model = Obj::import(input_filename); break;
+	}
+
 	ThreeMF::export_to_file(output_filename, model);
 }
 

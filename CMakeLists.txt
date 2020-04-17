@@ -20,6 +20,7 @@ find_package(libzip REQUIRED)
 #Sources.
 set(convertto3mf_sources
 	"main.cpp"
+	"detect_file_type.cpp"
 	"job.cpp"
 	"obj.cpp"
 	"point3.cpp"

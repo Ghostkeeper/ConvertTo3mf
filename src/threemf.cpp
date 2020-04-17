@@ -6,6 +6,7 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
+#include <iostream> //To message progress.
 #include <cstdio> //To remove any existing file before writing the new one.
 #include <unordered_map> //To make vertices unique and track their indices.
 
@@ -14,6 +15,7 @@
 namespace convertto3mf {
 
 void ThreeMF::export_to_file(const std::string& filename, const Model& model) {
+	std::cout << "Writing 3MF file: " << filename << std::endl;
 	ThreeMF threemf;
 	threemf.fill_from_model(model);
 	std::remove(filename.c_str()); //Remove any old archive if one exists.

@@ -35,6 +35,11 @@ public:
 
 protected:
 	/*!
+	 * All of the triangles stored in this STL file.
+	 */
+	std::vector<std::array<Point3, 3>> triangles;
+
+	/*!
 	 * Read the contents of a binary STL file and load it into this instance.
 	 */
 	void load(const std::string& filename);

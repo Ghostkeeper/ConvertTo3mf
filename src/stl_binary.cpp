@@ -74,7 +74,26 @@ void StlBinary::load(const std::string& filename) {
 	uint32_t num_triangles;
 	file_handle.read((char*)&num_triangles, sizeof(num_triangles));
 
-	//TODO: Load the triangles.
+	for(size_t triangle_index = 0; triangle_index < num_triangles; ++triangle_index) {
+		file_handle.seekg(84 + triangle_index * 50 + 12); //Skip over the normal vector. We don't need them.
+		float v1_x, v1_y, v1_z, v2_x, v2_y, v2_z, v3_x, v3_y, v3_z;
+		file_handle.read((char*)&v1_x, sizeof(float)); //Assuming that your CPU uses 32-bit floats, which is pretty much every desktop CPU.
+		file_handle.read((char*)&v1_y, sizeof(float));
+		file_handle.read((char*)&v1_z, sizeof(float));
+		file_handle.read((char*)&v2_x, sizeof(float));
+		file_handle.read((char*)&v2_y, sizeof(float));
+		file_handle.read((char*)&v2_z, sizeof(float));
+		file_handle.read((char*)&v3_x, sizeof(float));
+		file_handle.read((char*)&v3_y, sizeof(float));
+		file_handle.read((char*)&v3_z, sizeof(float));
+
+		std::array<Point3, 3> triangle = {
+			Point3(v1_x, v1_y, v1_z),
+			Point3(v2_x, v2_y, v2_z),
+			Point3(v3_x, v3_y, v3_z)
+		};
+		triangles.push_back(triangle);
+	}
 }
 
 }

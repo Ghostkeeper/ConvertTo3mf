@@ -19,7 +19,7 @@ namespace convertto3mf {
  * Collection of functions for handling binary STL files.
  */
 class StlBinary {
-public:
+	public:
 	/*!
 	 * Determines the likelihood of this file being a binary STL file.
 	 * \param filename The name of the file to check.
@@ -33,7 +33,7 @@ public:
 	 */
 	static Model import(const std::string& filename);
 
-protected:
+	protected:
 	/*!
 	 * All of the triangles stored in this STL file.
 	 */

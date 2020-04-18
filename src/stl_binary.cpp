@@ -72,6 +72,7 @@ void StlBinary::load(const std::string& filename) {
 	file_handle.seekg(80, file_handle.beg);
 	uint32_t num_triangles;
 	file_handle.read((char*)&num_triangles, sizeof(num_triangles));
+	triangles.reserve(num_triangles);
 
 	for(size_t triangle_index = 0; triangle_index < num_triangles; ++triangle_index) {
 		file_handle.seekg(84 + triangle_index * 50 + 12); //Skip over the normal vector. We don't need them.

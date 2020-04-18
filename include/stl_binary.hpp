@@ -43,6 +43,12 @@ protected:
 	 * Read the contents of a binary STL file and load it into this instance.
 	 */
 	void load(const std::string& filename);
+
+	/*!
+	 * Convert the STL-specific representation into the common 3D model
+	 * representation.
+	 */
+	Model to_model() const;
 };
 
 }

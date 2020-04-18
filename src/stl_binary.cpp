@@ -62,8 +62,7 @@ Model StlBinary::import(const std::string& filename) {
 	StlBinary stl; //Store the STL in its own representation.
 
 	stl.load(filename);
-	Model result;
-	return result;
+	return stl.to_model();
 }
 
 void StlBinary::load(const std::string& filename) {
@@ -94,6 +93,22 @@ void StlBinary::load(const std::string& filename) {
 		};
 		triangles.push_back(triangle);
 	}
+}
+
+Model StlBinary::to_model() const {
+	Model model; //The result.
+	model.meshes.emplace_back(); //There's always just one mesh in binary STLs.
+	Mesh& mesh = model.meshes.back();
+
+	for(const std::array<Point3, 3>& triangle : triangles) {
+		mesh.faces.emplace_back();
+		Face& face = mesh.faces.back();
+		face.vertices.push_back(triangle[0]);
+		face.vertices.push_back(triangle[1]);
+		face.vertices.push_back(triangle[2]);
+	}
+
+	return model;
 }
 
 }

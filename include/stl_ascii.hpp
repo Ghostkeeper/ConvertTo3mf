@@ -30,6 +30,23 @@ class StlAscii {
 	 * Read an ASCII STL file, storing it in memory as a `Model` instance.
 	 */
 	static Model import(const std::string& filename);
+
+	protected:
+	/*!
+	 * Data structure for an ASCII STL file.
+	 *
+	 * ASCII STL files can actually contain multiple meshes, while binary STL
+	 * files can't.
+	 *
+	 * This data structure is a list of meshes, each of which contains a list of
+	 * faces, which is a list of vertices.
+	 */
+	std::vector<std::vector<std::vector<Point3>>> meshes;
+
+	/*!
+	 * Read the contents of an ASCII STL file and load it into this instance.
+	 */
+	void load(const std::string& filename);
 };
 
 }

@@ -46,6 +46,9 @@ float StlAscii::is_stl_ascii(const std::string& filename) {
 	size_t line_end = 0;
 	while((line_end = sample.find('\n', line_start)) != sample.npos) {
 		std::string line = sample.substr(line_start, line_end - line_start);
+		if(line.find('\r') == line.length() - 1) { //Remove carriage returns if it's in this file.
+			line = line.substr(0, line.length() - 1);
+		}
 		lines_found++;
 		if(std::regex_match(line, correct_line)) {
 			correct_lines++;

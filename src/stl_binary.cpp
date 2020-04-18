@@ -13,7 +13,7 @@
 
 namespace convertto3mf {
 
-float StlBinary::is_stl_binary(const std::string filename) {
+float StlBinary::is_stl_binary(const std::string& filename) {
 	float probability = 1.0 / 3.0; //Final result.
 	//Probability of a file extension being different from the contents of the file. Probably an overestimation but we want to let the magic number determine it more.
 	constexpr float probability_incorrect_extension = 0.01;
@@ -54,8 +54,27 @@ float StlBinary::is_stl_binary(const std::string filename) {
 		probability *= probability_incorrect_size;
 	}
 
-	std::cout << "Probability of being binary STL: " << probability << std::endl;
 	return probability;
+}
+
+Model StlBinary::import(const std::string& filename) {
+	std::cout << "Importing binary STL file: " << filename << std::endl;
+	StlBinary stl; //Store the STL in its own representation.
+
+	stl.load(filename);
+	Model result;
+	return result;
+}
+
+void StlBinary::load(const std::string& filename) {
+	std::ifstream file_handle(filename, std::ios_base::in | std::ios_base::binary);
+
+	//Read the number of triangles.
+	file_handle.seekg(80, file_handle.beg);
+	uint32_t num_triangles;
+	file_handle.read((char*)&num_triangles, sizeof(num_triangles));
+
+	//TODO: Load the triangles.
 }
 
 }

@@ -11,6 +11,8 @@
 
 #include <string> //To accept filenames.
 
+#include "model.hpp" //To construct 3D models from the file.
+
 namespace convertto3mf {
 
 /*!
@@ -24,7 +26,18 @@ public:
 	 * \return The likelihood of this file being a binary STL file. This is a
 	 * rather arbitrary guess of probability between 0 and 1.
 	 */
-	static float is_stl_binary(const std::string filename);
+	static float is_stl_binary(const std::string& filename);
+
+	/*!
+	 * Read a binary STL file, storing it in memory as a `Model` instance.
+	 */
+	static Model import(const std::string& filename);
+
+protected:
+	/*!
+	 * Read the contents of a binary STL file and load it into this instance.
+	 */
+	void load(const std::string& filename);
 };
 
 }

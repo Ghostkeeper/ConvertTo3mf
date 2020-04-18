@@ -72,6 +72,12 @@ void StlBinary::load(const std::string& filename) {
 	file_handle.seekg(80, file_handle.beg);
 	uint32_t num_triangles;
 	file_handle.read((char*)&num_triangles, sizeof(num_triangles));
+	file_handle.seekg(0, file_handle.end);
+	size_t file_size = file_handle.tellg();
+	file_handle.seekg(84, file_handle.beg);
+	if((file_size - 84) / 50 < num_triangles) { //Number of triangles must be corrupt.
+		num_triangles = (file_size - 84) / 50; //Prevent reading outside of the file, or allocating absurd amounts of memory.
+	}
 	triangles.reserve(num_triangles);
 
 	for(size_t triangle_index = 0; triangle_index < num_triangles; ++triangle_index) {

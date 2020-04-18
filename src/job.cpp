@@ -29,6 +29,7 @@ void Job::run() {
 	switch(file_type) {
 		case FileType::OBJ: model = Obj::import(input_filename); break;
 		case FileType::STL_BINARY: model = StlBinary::import(input_filename); break;
+		case FileType::STL_ASCII: std::cout << "ASCII STL is not supported yet." << std::endl; break;
 	}
 
 	ThreeMF::export_to_file(output_filename, model);

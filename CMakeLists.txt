@@ -24,6 +24,7 @@ set(convertto3mf_sources
 	"job.cpp"
 	"obj.cpp"
 	"point3.cpp"
+	"stl_ascii.cpp"
 	"stl_binary.cpp"
 	"threemf.cpp"
 )

@@ -8,6 +8,7 @@
 
 #include "detect_file_type.hpp" //The definitions for this file.
 #include "obj.hpp" //To detect OBJ files.
+#include "stl_ascii.hpp" //To detect ASCII STL files.
 #include "stl_binary.hpp" //To detect binary STL files.
 
 namespace convertto3mf {
@@ -26,6 +27,12 @@ FileType detect_file_type(const std::string& filename) {
 	if(stl_binary_probability > highest_probability) {
 		highest_probability = stl_binary_probability;
 		result = FileType::STL_BINARY;
+	}
+
+	const float stl_ascii_probability = StlAscii::is_stl_ascii(filename);
+	if(stl_ascii_probability > highest_probability) {
+		highest_probability = stl_ascii_probability;
+		result = FileType::STL_ASCII;
 	}
 
 	return result;

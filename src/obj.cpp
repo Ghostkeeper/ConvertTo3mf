@@ -17,15 +17,6 @@
 
 namespace convertto3mf {
 
-Model Obj::import(const std::string filename) {
-	std::cout << "Importing Wavefront OBJ file: " << filename << std::endl;
-	Obj obj; //Store the OBJ file in its own representation.
-
-	std::vector<std::string> lines = obj.preprocess(filename);
-	obj.load(lines);
-	return obj.to_model();
-}
-
 float Obj::is_obj(const std::string filename) {
 	float probability = 1.0 / 3.0; //Final result.
 	//Probability of a file extension being different from the contents of the file. Probably an overestimation but we want to let the magic number determine it more.
@@ -73,6 +64,15 @@ float Obj::is_obj(const std::string filename) {
 	}
 
 	return probability;
+}
+
+Model Obj::import(const std::string filename) {
+	std::cout << "Importing Wavefront OBJ file: " << filename << std::endl;
+	Obj obj; //Store the OBJ file in its own representation.
+
+	std::vector<std::string> lines = obj.preprocess(filename);
+	obj.load(lines);
+	return obj.to_model();
 }
 
 std::vector<std::string> Obj::preprocess(const std::string filename) const {

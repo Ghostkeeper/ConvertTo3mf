@@ -23,17 +23,17 @@ class Model;
 class Obj {
 public:
 	/*!
-	 * Read an OBJ file, storing it in memory as a `Model` instance.
-	 */
-	static Model import(const std::string filename);
-
-	/*!
 	 * Determines the likelihood of this file being an OBJ file.
 	 * \param filename The name of the file to check.
 	 * \return The likelihood of this file being an OBJ file. This is a rather
 	 * arbitrary guess of probability between 0 and 1.
 	 */
 	static float is_obj(const std::string filename);
+
+	/*!
+	 * Read an OBJ file, storing it in memory as a `Model` instance.
+	 */
+	static Model import(const std::string filename);
 
 protected:
 	/*!

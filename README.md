@@ -41,10 +41,14 @@ Optional parameters:
 Support
 ----
 This application currently supports the following input model formats:
-* Wavefront OBJ (vertices, faces).
+* Wavefront OBJ (faces, vertices).
+* Binary STL (triangles, vertices).
+* ASCII STL (multiple meshes, faces, vertices).
+
+The application will automatically detect which file type is contained in the file, even if the extension is incorrect.
 
 The 3MF features supported are:
 * Content types.
 * Relationships.
-* Multiple models.
+* Multiple meshes in one build.
 * Meshes with indexed vertices.

@@ -68,7 +68,7 @@ Model StlAscii::import(const std::string& filename) {
 	StlAscii stl; //Store the STL in its own representation.
 
 	stl.load(filename);
-	return Model(); //TODO.
+	return stl.to_model();
 }
 
 void StlAscii::load(const std::string& filename) {
@@ -164,6 +164,25 @@ void StlAscii::load(const std::string& filename) {
 			face->emplace_back(x, y, z);
 		}
 	}
+}
+
+Model StlAscii::to_model() const {
+	Model model; //The result.
+
+	//Basically a one-on-one copy from our data structure into the common one.
+	for(const std::vector<std::vector<Point3>>& my_mesh : meshes) {
+		model.meshes.emplace_back();
+		Mesh& mesh = model.meshes.back();
+		for(const std::vector<Point3>& my_face : my_mesh) {
+			mesh.faces.emplace_back();
+			Face& face = mesh.faces.back();
+			for(const Point3& my_vertex : my_face) {
+				face.vertices.push_back(my_vertex);
+			}
+		}
+	}
+
+	return model;
 }
 
 }

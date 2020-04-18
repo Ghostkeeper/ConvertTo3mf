@@ -6,7 +6,9 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
-#include "detect_file_type.hpp"
+#include "detect_file_type.hpp" //The definitions for this file.
+#include "obj.hpp" //To detect OBJ files.
+#include "stl_binary.hpp" //To detect binary STL files.
 
 namespace convertto3mf {
 
@@ -14,10 +16,16 @@ FileType detect_file_type(const std::string& filename) {
 	float highest_probability = 0.0;
 	FileType result = FileType::OBJ;
 
-	float obj_probability = Obj::is_obj(filename);
+	const float obj_probability = Obj::is_obj(filename);
 	if(obj_probability > highest_probability) {
 		highest_probability = obj_probability;
 		result = FileType::OBJ;
+	}
+
+	const float stl_binary_probability = StlBinary::is_stl_binary(filename);
+	if(stl_binary_probability > highest_probability) {
+		highest_probability = stl_binary_probability;
+		result = FileType::STL_BINARY;
 	}
 
 	return result;

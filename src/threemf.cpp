@@ -10,7 +10,7 @@
 #include <cstdio> //To remove any existing file before writing the new one.
 #include <unordered_map> //To make vertices unique and track their indices.
 
-#include "threemf.hpp"
+#include "threemf.hpp" //The definitions for this file.
 
 namespace convertto3mf {
 

@@ -6,30 +6,28 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
-#ifndef DETECT_FILE_TYPE_HPP
-#define DETECT_FILE_TYPE_HPP
+#ifndef STL_BINARY_HPP
+#define STL_BINARY_HPP
 
 #include <string> //To accept filenames.
 
 namespace convertto3mf {
 
 /*!
- * File types that this application is able to detect and convert into.
+ * Collection of functions for handling binary STL files.
  */
-enum FileType {
-	OBJ,
-	STL_BINARY
+class StlBinary {
+public:
+	/*!
+	 * Determines the likelihood of this file being a binary STL file.
+	 * \param filename The name of the file to check.
+	 * \return The likelihood of this file being a binary STL file. This is a
+	 * rather arbitrary guess of probability between 0 and 1.
+	 */
+	static float is_stl_binary(const std::string filename);
 };
-
-/*!
- * Detects the most likely file type for a certain file.
- *
- * This calls upon each available file type to determine what the probability is
- * that it's that file type. Then it picks the type that reports the highest
- * probability.
- */
-FileType detect_file_type(const std::string& filename);
 
 }
 
-#endif //DETECT_FILE_TYPE_HPP
+#endif //STL_BINARY_HPP
+

@@ -27,6 +27,7 @@ void Job::run() {
 	Model model;
 	switch(file_type) {
 		case FileType::OBJ: model = Obj::import(input_filename); break;
+		case FileType::STL_BINARY: std::cout << "Here's where I would put my binary STL reader... IF I HAD ONE!" << std::endl; break;
 	}
 
 	ThreeMF::export_to_file(output_filename, model);

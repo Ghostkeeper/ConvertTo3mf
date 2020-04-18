@@ -28,12 +28,12 @@ public:
 	 * \return The likelihood of this file being an OBJ file. This is a rather
 	 * arbitrary guess of probability between 0 and 1.
 	 */
-	static float is_obj(const std::string filename);
+	static float is_obj(const std::string& filename);
 
 	/*!
 	 * Read an OBJ file, storing it in memory as a `Model` instance.
 	 */
-	static Model import(const std::string filename);
+	static Model import(const std::string& filename);
 
 protected:
 	/*!
@@ -57,7 +57,7 @@ protected:
 	 * \return A list of lines from the file, slightly pre-processed for easier
 	 * parsing.
 	 */
-	std::vector<std::string> preprocess(const std::string filename) const;
+	std::vector<std::string> preprocess(const std::string& filename) const;
 
 	/*!
 	 * Loads the contents of the OBJ file from pre-processed lines.

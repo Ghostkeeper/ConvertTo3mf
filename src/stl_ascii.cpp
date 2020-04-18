@@ -39,7 +39,7 @@ float StlAscii::is_stl_ascii(const std::string& filename) {
 	std::string sample(sample_chars); //We've read up to 1kB from this file now.
 
 	//Match a line with this regex that matches on the possible lines of ASCII STL.
-	const std::regex correct_line("^\\s*$|\\s*solid.*|\\s*facet\\s*|\\s*facet normal .*|\\s*outer loop\\s*|\\s*vertex .*|\\s*endloop\\s*|\\s*endfacet\\s*|\\s*endsolid\\s*");
+	const std::regex correct_line("^\\s*$|\\s*solid.*|\\s*facet\\s*|\\s*facet normal .*|\\s*outer loop\\s*|\\s*vertex .*|\\s*endloop\\s*|\\s*endfacet\\s*|\\s*endsolid.*");
 	size_t correct_lines = 0;
 	size_t lines_found = 0;
 	size_t line_start = 0;
@@ -99,7 +99,7 @@ void StlAscii::load(const std::string& filename) {
 			mesh = &meshes.back();
 			face = nullptr;
 			in_loop = false;
-		} else if(line == "endsolid") {
+		} else if(line.find("endsolid") == 0) {
 			mesh = nullptr;
 			face = nullptr;
 			in_loop = false;

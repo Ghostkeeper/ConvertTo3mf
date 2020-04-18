@@ -6,6 +6,7 @@
  * You should have received a copy of the GNU Affero General Public License along with this library. If not, see <https://gnu.org/licenses/>.
  */
 
+#include <iostream> //To give progress updates.
 #include <fstream> //To read the ASCII STL files.
 #include <regex> //To match with the syntax of STL to detect the file format.
 
@@ -60,6 +61,13 @@ float StlAscii::is_stl_ascii(const std::string& filename) {
 	}
 
 	return probability;
+}
+
+Model StlAscii::import(const std::string& filename) {
+	std::cout << "Importing ASCII STL file: " << filename << std::endl;
+	StlAscii stl; //Store the STL in its own representation.
+
+	return Model(); //TODO.
 }
 
 }

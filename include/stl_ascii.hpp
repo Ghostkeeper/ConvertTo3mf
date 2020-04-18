@@ -9,6 +9,8 @@
 #ifndef STL_ASCII_HPP
 #define STL_ASCII_HPP
 
+#include "model.hpp" //To convert ASCII STLs into our internal model representation.
+
 namespace convertto3mf {
 
 /*!
@@ -23,6 +25,11 @@ class StlAscii {
 	 * rather arbitrary guess of probability between 0 and 1.
 	 */
 	static float is_stl_ascii(const std::string& filename);
+
+	/*!
+	 * Read an ASCII STL file, storing it in memory as a `Model` instance.
+	 */
+	static Model import(const std::string& filename);
 };
 
 }

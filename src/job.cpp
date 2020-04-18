@@ -12,6 +12,7 @@
 #include "job.hpp" //The definitions for this file.
 #include "model.hpp" //To store models as intermediary representation.
 #include "obj.hpp" //To import OBJ files.
+#include "stl_ascii.hpp" //To import ASCII STL files.
 #include "stl_binary.hpp" //To import binary STL files.
 #include "threemf.hpp" //To write 3MF files.
 
@@ -29,7 +30,7 @@ void Job::run() {
 	switch(file_type) {
 		case FileType::OBJ: model = Obj::import(input_filename); break;
 		case FileType::STL_BINARY: model = StlBinary::import(input_filename); break;
-		case FileType::STL_ASCII: std::cout << "ASCII STL is not supported yet." << std::endl; break;
+		case FileType::STL_ASCII: model = StlAscii::import(input_filename); break;
 	}
 
 	ThreeMF::export_to_file(output_filename, model);

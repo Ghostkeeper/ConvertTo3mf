@@ -9,8 +9,8 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake") #Finding dependencies.
 
 #Release configuration.
 set(CONVERTTO3MF_VERSION_MAJOR 0 CACHE STRING "Major release version. This must be incremented if there are changes that are not backwards compatible.")
-set(CONVERTTO3MF_VERSION_MINOR 0 CACHE STRING "Minor release version. This must be incremented if there are changes that are not forwards compatible.")
-set(CONVERTTO3MF_VERSION_PATCH 1 CACHE STRING "Patch release version. This must be incremented for every release where there are no changes to the API.")
+set(CONVERTTO3MF_VERSION_MINOR 1 CACHE STRING "Minor release version. This must be incremented if there are changes that are not forwards compatible.")
+set(CONVERTTO3MF_VERSION_PATCH 0 CACHE STRING "Patch release version. This must be incremented for every release where there are no changes to the API.")
 
 project(convertto3mf VERSION ${CONVERTTO3MF_VERSION_MAJOR}.${CONVERTTO3MF_VERSION_MINOR}.${CONVERTTO3MF_VERSION_PATCH} DESCRIPTION "Command line application to convert 3D models to 3MF.")
 
